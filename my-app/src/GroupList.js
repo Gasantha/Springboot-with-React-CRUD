@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Button,ButtonGroup,Container,Table} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import {Link} from 'react-router-dom';
+
 class GroupList extends Component {
 	constructor(props){
 	super(props);
@@ -10,13 +11,10 @@ class GroupList extends Component {
 }
 	componentDidMount(){
 		this.setState({isLoading:true});
-		/*fetch('/api/groups').then(response=>response.json()).
-		then(data=>this.setState({groups:data,isLoading:true}));*/
 		fetch('/api/groups').then(response=>response.json()).then(data=>this.setState({groups:data,isLoading:false}));
 	}
 	async remove(id){
-		await fetch('/api/group/{id}',{
-			
+		await fetch(`/api/group/${id}`, {			
 			method:'DELETE',
 			headers:{
 				'Content-Type':'application/json',
@@ -30,7 +28,7 @@ class GroupList extends Component {
 	render(){
 		const {groups,isLoading}=this.state;
 		if(isLoading){
-			return <p>Loading</p>;
+			return <p>Loading....</p>;
 		}
 		const groupList=groups.map(group=>{
 			const address =`${group.address || ''} ${group.city|| ''} ${group.stateOrProvince||''}`;
